@@ -53,10 +53,15 @@ export const scaleIn = {
 };
 
 // Transición de página — enter suave, exit más rápido (UI/UX Pro Max)
+// IMPORTANTE: sin `filter` a propósito. Un filter distinto de `none`
+// (incluso blur(0px)) convierte este contenedor en referencia para los
+// `position: fixed` de las páginas (kiosco del test, sheets, modales),
+// rompiendo `inset-0` contra el viewport — en móvil el contenido quedaba
+// "enterrado" fuera de pantalla.
 export const pageVariants = {
-  initial: { opacity: 0, y: 16, filter: 'blur(6px)' },
-  animate: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.45, ease: EASE_FLUID } },
-  exit: { opacity: 0, y: -10, filter: 'blur(4px)', transition: { duration: 0.22, ease: 'easeIn' } },
+  initial: { opacity: 0, y: 16 },
+  animate: { opacity: 1, y: 0, transition: { duration: 0.45, ease: EASE_FLUID } },
+  exit: { opacity: 0, y: -10, transition: { duration: 0.22, ease: 'easeIn' } },
 };
 
 // Split-text por palabras (titulares cortos < 8 palabras)
