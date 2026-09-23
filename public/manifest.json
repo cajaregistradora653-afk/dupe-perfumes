@@ -1,0 +1,35 @@
+{
+  "name": "Dupé Perfumería",
+  "short_name": "Dupé",
+  "description": "Fragancias inspiradas que se convierten en las mejores experiencias. Calidad y perdurabilidad. Creado para ti.",
+  "lang": "es",
+  "dir": "ltr",
+  "categories": ["shopping", "lifestyle"],
+  "start_url": "/",
+  "scope": "/",
+  "id": "/",
+  "display": "standalone",
+  "background_color": "#1E5144",
+  "theme_color": "#1E5144",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/Dupé_favicon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/Dupé_favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/Dupé_favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

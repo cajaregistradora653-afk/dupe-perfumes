@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Beniet favicon">
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+  <rect width="120" height="120" rx="60" fill="#1E5144"/>
+  <circle cx="60" cy="60" r="48" fill="#1E5144" filter="url(#shadow)" opacity="0.92"/>
+  <text x="50%" y="54%" text-anchor="middle" dominant-baseline="middle" font-family="'Playfair Display', serif" font-weight="700" font-size="64" fill="#F5F5DC">B</text>
+</svg>
