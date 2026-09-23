@@ -550,7 +550,7 @@ const ExperienceCenter = () => {
             </div>
 
             {/* Main Content */}
-            <div className="flex-1 flex items-center justify-center px-6 md:px-16 relative z-10 min-h-0 overflow-y-auto">
+            <div className="flex-1 flex justify-center px-6 md:px-16 relative z-10 min-h-0 overflow-y-auto py-6">
               <AnimatePresence mode="wait">
                 {/* ──── CHOICE SCREEN ──── */}
                 {kioskMode === null ? (
@@ -560,7 +560,7 @@ const ExperienceCenter = () => {
                     animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
                     exit={reduce ? { opacity: 0 } : { opacity: 0, y: -18, filter: 'blur(6px)' }}
                     transition={{ duration: 0.45, ease: EASE_FLUID }}
-                    className="w-full max-w-4xl"
+                    className="w-full max-w-4xl m-auto"
                   >
                     <div className="text-center mb-12">
                       <h3 className="text-4xl md:text-6xl font-elegant leading-tight mb-4">
@@ -629,11 +629,11 @@ const ExperienceCenter = () => {
                         animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
                         exit={reduce ? { opacity: 0 } : { opacity: 0, x: -48, filter: 'blur(6px)' }}
                         transition={{ duration: 0.4, ease: EASE_FLUID }}
-                        className="w-full max-w-3xl"
+                        className="w-full max-w-3xl m-auto"
                       >
                         {/* Banner de video del test (siempre silenciado) */}
                         <QuizVideoBanner />
-                        <div className="flex items-center gap-3 mb-10">
+                        <div className="flex items-center gap-3 mb-6 md:mb-10">
                           {steps.map((_, i) => (
                             <div key={i} className="flex-1 h-1 rounded-full overflow-hidden bg-white/10">
                               <motion.div
@@ -667,7 +667,7 @@ const ExperienceCenter = () => {
                         </div>
                       </motion.div>
                     ) : (
-                      <motion.div key="results" initial={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.95, filter: 'blur(6px)' }} animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }} transition={{ duration: 0.5, ease: EASE_FLUID }} className="w-full max-w-5xl py-6">
+                      <motion.div key="results" initial={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.95, filter: 'blur(6px)' }} animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }} transition={{ duration: 0.5, ease: EASE_FLUID }} className="w-full max-w-5xl m-auto py-6">
                         <div className="text-center mb-8">
                           <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/15 border border-white/25 rounded-full text-[10px] font-bold uppercase tracking-[0.25em] text-white/85 mb-4">
                             <Sparkles size={12} /> Tu perfil olfativo
@@ -743,7 +743,7 @@ const ExperienceCenter = () => {
                   /* ──── DECANT BUILDER FLOW ──── */
                   <AnimatePresence mode="wait">
                     {!dShowResult ? (
-                      <div key="dform" className="w-full max-w-6xl"
+                      <div key="dform" className="w-full max-w-6xl m-auto"
                       >
                         {/* Stepper con etiquetas */}
                         <div className="flex items-center gap-2 sm:gap-3 mb-4">
@@ -1074,7 +1074,7 @@ const ExperienceCenter = () => {
                         </div>
                       </div>
                     ) : (
-                      <motion.div key="dresult" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="w-full max-w-4xl">
+                      <motion.div key="dresult" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="w-full max-w-4xl m-auto">
                         <div className="text-center mb-10">
                           <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-gold/10 border border-gold/20 rounded-full text-[10px] font-bold uppercase tracking-[0.25em] text-gold/80 mb-4"><Sparkles size={12} /> Tu Creación</span>
                           <h3 className="text-3xl md:text-4xl font-elegant text-white">Tu Fragancia <span className="text-gold">Personalizada</span></h3>

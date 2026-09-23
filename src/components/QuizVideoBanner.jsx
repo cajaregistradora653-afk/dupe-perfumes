@@ -13,10 +13,10 @@ const QuizVideoBanner = () => {
       initial={reduce ? false : { opacity: 0, y: -14 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: EASE_FLUID }}
-      className="relative overflow-hidden rounded-3xl border border-white/15 shadow-2xl shadow-black/40 mb-8"
+      className="relative overflow-hidden rounded-3xl border border-white/15 shadow-2xl shadow-black/40 mb-5 sm:mb-8"
     >
       <video
-        className="w-full h-32 sm:h-44 md:h-52 object-cover"
+        className="w-full h-24 sm:h-44 md:h-52 object-cover"
         autoPlay={!reduce}
         muted
         loop
