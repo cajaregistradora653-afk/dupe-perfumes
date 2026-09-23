@@ -209,7 +209,12 @@ const Navbar = () => {
               transition={{ duration: 0.32, ease: EASE_FLUID }}
               className="lg:hidden bg-white/95 backdrop-blur-xl border-t border-ink/10 overflow-hidden"
             >
-              <div className="px-6 pt-6 pb-safe flex flex-col gap-1 max-h-[70dvh] overflow-y-auto">
+              {/* Header del menú: marca en dorado con fuente Monda */}
+              <div className="px-6 pt-5 pb-4 border-b border-gold/25 flex items-center gap-3">
+                <img src="/Images/Dupé_logo.jpg" alt="Dupé" className="h-9 w-9 rounded-full border border-gold/40 shadow-sm" />
+                <span className="font-monda font-bold text-xl tracking-wide text-gold">Dupé Perfumeria</span>
+              </div>
+              <div className="px-6 pt-4 pb-safe flex flex-col gap-1 max-h-[70dvh] overflow-y-auto">
                 {navLinks.map((link, i) => {
                   const expActive = link.path.startsWith('/experiencia') ? isExperienceActive(link) : null;
                   const Icon = link.Icon;

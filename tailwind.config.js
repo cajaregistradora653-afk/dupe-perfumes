@@ -36,6 +36,7 @@ export default {
         cursive: ["'Roboto'", "sans-serif"],
         sans: ["'Roboto'", "sans-serif"],
         mono: ["'Roboto'", "monospace"],
+        monda: ["'Monda'", "sans-serif"],
       },
       boxShadow: {
         'card': '0 12px 34px rgba(30, 81, 68, 0.10), 0 2px 8px rgba(0, 0, 0, 0.06)',
