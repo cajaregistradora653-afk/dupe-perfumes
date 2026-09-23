@@ -7,6 +7,7 @@ import { dupes } from '../data/dupes';
 import { LINEAS_FRAGANCIA, DECANT_PRICING } from '../data/decantData';
 import { useCart } from '../context/CartContext';
 import { BeatingHeart, GoldSparkles, TierBadge } from './MatchCelebration';
+import QuizVideoBanner from './QuizVideoBanner';
 import { fromCatalogProduct, fromCustomDecant, cheapestSize } from '../lib/cart';
 import { ShoppingCart } from 'lucide-react';
 import { EASE_FLUID, SPRING_SOFT } from '../lib/motion';
@@ -630,6 +631,8 @@ const ExperienceCenter = () => {
                         transition={{ duration: 0.4, ease: EASE_FLUID }}
                         className="w-full max-w-3xl"
                       >
+                        {/* Banner de video del test (siempre silenciado) */}
+                        <QuizVideoBanner />
                         <div className="flex items-center gap-3 mb-10">
                           {steps.map((_, i) => (
                             <div key={i} className="flex-1 h-1 rounded-full overflow-hidden bg-white/10">
