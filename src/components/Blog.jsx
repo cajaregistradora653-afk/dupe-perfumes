@@ -1,14 +1,16 @@
 import { motion, useReducedMotion } from 'framer-motion';
-import { ArrowRight, BookOpen, ExternalLink } from 'lucide-react';
+import { ArrowRight, BookOpen, ExternalLink, Sparkles } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { CinematicPageHeader } from './CinematicPageHeader';
 import { ScentAmbient } from './ScentAmbient';
 import { Reveal } from './motion-primitives';
+import { FALLBACK_ARTICLES } from '../data/newsFallback';
 
 const Blog = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [isFallback, setIsFallback] = useState(false);
   const reduce = useReducedMotion();
 
   useEffect(() => {
@@ -21,11 +23,17 @@ const Blog = () => {
         const localUrl = `https://newsapi.org/v2/everything?q=${query}&language=es&sortBy=publishedAt&excludeDomains=${excludeDomains}&apiKey=${apiKey}`;
 
         // En localhost llamamos directo a NewsAPI (está permitido)
-        // En producción usamos nuestro proxy /api/news para saltar el bloqueo
+        // En producción usamos nuestro proxy /api/news para saltar el bloqueo.
+        // OJO: /api/news solo existe en Vercel; en Firebase Hosting (estático)
+        // responde index.html → si falla, usamos contenido propio de respaldo.
         const response = await fetch(isLocal ? localUrl : '/api/news');
 
         if (!response.ok) {
           throw new Error('Error al cargar las noticias');
+        }
+        const contentType = response.headers.get('content-type') || '';
+        if (!contentType.includes('application/json')) {
+          throw new Error('Respuesta no válida del servidor de noticias');
         }
         const data = await response.json();
 
@@ -45,13 +53,18 @@ const Blog = () => {
           title: article.title,
           category: 'Perfumería',
           date: new Date(article.publishedAt).toLocaleDateString('es-ES', { month: 'long', year: 'numeric' }),
-          image: article.urlToImage || '/Images/default-article.png',
+          image: article.urlToImage || '/Images/perfume_refined.webp',
           description: article.description || 'Lee más sobre tendencias en perfumería.',
           link: article.url
         }));
+        if (filteredArticles.length === 0) {
+          throw new Error('Sin artículos relevantes');
+        }
         setProducts(filteredArticles);
       } catch (err) {
-        setError(err.message);
+        // Plan B: contenido editorial propio (siempre disponible, sin red externa)
+        setProducts(FALLBACK_ARTICLES);
+        setIsFallback(true);
       } finally {
         setLoading(false);
       }
@@ -85,28 +98,23 @@ const Blog = () => {
     );
   }
 
-  if (error) {
-    return (
-      <section id="blog" className="pt-16 md:pt-24 pb-8 md:pb-12 bg-linen">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center">
-            <p className="text-moss/60">Error al cargar las noticias: {error}</p>
-          </div>
-        </div>
-      </section>
-    );
-  }
-
   return (
     <section id="blog" className="pt-16 md:pt-24 pb-8 md:pb-12 bg-linen relative overflow-hidden">
       <ScentAmbient variant="light">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 md:gap-12 mb-10 md:mb-20">
-          <CinematicPageHeader
-            eyebrow="Recomendaciones"
-            title={<>Noticias de <span className="font-cursive font-normal text-emerald">Belleza</span></>}
-            description="Artículos recientes sobre perfumes, fragancias y cuidado personal."
-          />
+          <div>
+            <CinematicPageHeader
+              eyebrow="Recomendaciones"
+              title={<>Noticias de <span className="font-cursive font-normal text-emerald">Belleza</span></>}
+              description="Artículos recientes sobre perfumes, fragancias y cuidado personal."
+            />
+            {isFallback && (
+              <span className="inline-flex items-center gap-1.5 mt-4 px-3 py-1.5 rounded-full bg-emerald/10 border border-emerald/20 text-emerald text-[10px] font-bold uppercase tracking-widest">
+                <Sparkles size={12} /> Selección del equipo Dupé
+              </span>
+            )}
+          </div>
           <Reveal delay={0.15} className="shrink-0">
           <button className="flex items-center gap-2 md:gap-3 text-emerald font-bold uppercase tracking-widest text-xs md:text-sm hover:translate-x-2 transition-transform">
             Ver más noticias <ArrowRight size={16} className="md:w-5 md:h-5" />
@@ -126,12 +134,18 @@ const Blog = () => {
               className="group cursor-pointer will-change-transform"
             >
               <div className="rounded-artisanal overflow-hidden aspect-[16/10] md:aspect-video mb-6 md:mb-8 relative">
-                <img src={product.image} alt={product.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" onError={(e) => e.target.src = '/Images/default-product.png'} />
+                <img src={product.image} alt={product.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" onError={(e) => e.target.src = '/Images/perfume_refined.webp'} />
                 <div className="absolute inset-0 bg-emerald/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 {product.link && (
-                  <a href={product.link} target="_blank" rel="noopener noreferrer" className="absolute top-4 right-4 bg-emerald text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
-                    <ExternalLink size={16} />
-                  </a>
+                  product.link.startsWith('/') ? (
+                    <Link to={product.link} className="absolute top-4 right-4 bg-emerald text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+                      <ExternalLink size={16} />
+                    </Link>
+                  ) : (
+                    <a href={product.link} target="_blank" rel="noopener noreferrer" className="absolute top-4 right-4 bg-emerald text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+                      <ExternalLink size={16} />
+                    </a>
+                  )
                 )}
               </div>
               <div className="space-y-3 md:space-y-4">
